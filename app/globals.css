@@ -1,0 +1,75 @@
+@import url('https://fonts.googleapis.com/css2?family=Antonio:wght@100..700&family=Big+Shoulders+Display:wght@100..900&display=swap');
+@import "tailwindcss";
+
+:root {
+  --background: #030407;
+  --foreground: #f2f4f8;
+  --font-display: 'Big Shoulders Display', 'Antonio', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-display: var(--font-display);
+  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-geist-sans);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  background-color: #030407;
+  color: #f2f4f8;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  user-select: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Vertical cosmic axis pulse */
+@keyframes beamPulse {
+  0%, 100% {
+    opacity: 0.72;
+    filter: drop-shadow(0 0 12px rgba(80, 200, 255, 0.4)) drop-shadow(0 0 35px rgba(50, 160, 255, 0.2));
+  }
+  50% {
+    opacity: 0.95;
+    filter: drop-shadow(0 0 20px rgba(100, 220, 255, 0.65)) drop-shadow(0 0 50px rgba(60, 180, 255, 0.35));
+  }
+}
+
+.cosmic-beam {
+  animation: beamPulse 6s ease-in-out infinite;
+}
+
+/* Subtle scroll indicator line animation */
+@keyframes scrollTick {
+  0% {
+    transform: scaleY(0.15);
+    transform-origin: top;
+    opacity: 0.2;
+  }
+  50% {
+    transform: scaleY(1);
+    transform-origin: top;
+    opacity: 0.8;
+  }
+  50.1% {
+    transform-origin: bottom;
+  }
+  100% {
+    transform: scaleY(0.15);
+    transform-origin: bottom;
+    opacity: 0.2;
+  }
+}
+
+.scroll-line-tick {
+  animation: scrollTick 2.6s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+}
+
