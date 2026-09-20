@@ -19,16 +19,25 @@
   box-sizing: border-box;
 }
 
-html,
-body {
+html {
   background-color: #030407;
   color: #f2f4f8;
-  height: 100%;
   width: 100%;
-  overflow: hidden;
+  min-height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  scroll-behavior: smooth;
   user-select: none;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background-color: #030407;
+  color: #f2f4f8;
+  width: 100%;
+  min-height: 100%;
+  overflow-x: hidden;
 }
 
 /* Vertical cosmic axis pulse */

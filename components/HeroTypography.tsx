@@ -207,59 +207,57 @@ export default function HeroTypography() {
 
         const I = Math.max(0, Math.min(1, state.intensity));
 
-        // 1. DYNAMIC FONT WEIGHT: continuous interpolation from thin 100 to bold 850
-        const currentWeight = Math.round(100 + I * 750);
+        // 1. DYNAMIC FONT WEIGHT: native continuous interpolation from hairline 100 to bold 750
+        // Clean, crisp architectural weight without artificial stroke distortion
+        const currentWeight = Math.round(100 + I * 650);
 
         // 2. EXPANSION: strictly horizontal stretch with subtle vertical breath, anchored to center
-        // scaleX: 1.0 -> 1.38 (active letter), scaleY: 1.0 -> 1.04
-        const scaleX = 1 + I * 0.38;
+        // scaleX: 1.0 -> 1.40 (active letter), scaleY: 1.0 -> 1.04
+        const scaleX = 1 + I * 0.40;
         const scaleY = 1 + I * 0.04;
 
-        // 3. PHYSICAL TEXT STROKE: adds genuine physical stroke thickness matching reference
-        const strokeWidth = (I * 2.2).toFixed(2);
-
         // Perspective horizontal drift away from central axis + cursor parallax
-        const perspectiveOffset = (i - 2) * 2.5 * I;
-        const cursorOffset = mouse.active && slot ? (slot.x - mouse.x) * 0.03 * I : 0;
+        const perspectiveOffset = (i - 2) * 2.0 * I;
+        const cursorOffset = mouse.active && slot ? (slot.x - mouse.x) * 0.025 * I : 0;
 
-        // 4. LAYER 3: FAR SHADOW (Letter-shaped copy: translucent, broad blur, casting onto background)
+        // 3. LAYER 3: FAR SHADOW (Letter-shaped copy: translucent, broad blur, casting onto background)
         const farDepthEl = farDepthRefs.current[i];
         if (farDepthEl) {
-          const farY = 8 + I * 16;
-          const farX = perspectiveOffset * 1.8 + cursorOffset * 1.5;
-          farDepthEl.style.transform = `translate3d(${farX.toFixed(1)}px, ${farY.toFixed(1)}px, 0) scale(${(scaleX * 1.05).toFixed(4)}, ${(scaleY * 1.02).toFixed(4)})`;
-          farDepthEl.style.opacity = (I * 0.88).toFixed(3);
-          farDepthEl.style.filter = `blur(${(12 + I * 22).toFixed(1)}px)`;
+          const farY = 6 + I * 14;
+          const farX = perspectiveOffset * 1.6 + cursorOffset * 1.4;
+          farDepthEl.style.transform = `translate3d(${farX.toFixed(1)}px, ${farY.toFixed(1)}px, 0) scale(${(scaleX * 1.04).toFixed(4)}, ${(scaleY * 1.02).toFixed(4)})`;
+          farDepthEl.style.opacity = (I * 0.82).toFixed(3);
+          farDepthEl.style.filter = `blur(${(10 + I * 20).toFixed(1)}px)`;
           farDepthEl.style.fontWeight = `${currentWeight}`;
           farDepthEl.style.fontVariationSettings = `'wght' ${currentWeight}`;
-          farDepthEl.style.webkitTextStroke = I > 0.02 ? `${(I * 2.5).toFixed(1)}px #000000` : "0px";
+          farDepthEl.style.webkitTextStroke = "0px";
         }
 
-        // 5. LAYER 2: NEAR SHADOW (Letter-shaped copy: darker silhouette, closer, moderately blurred)
+        // 4. LAYER 2: NEAR SHADOW (Letter-shaped copy: darker silhouette, closer, softly blurred)
         const nearDepthEl = nearDepthRefs.current[i];
         if (nearDepthEl) {
           const nearY = 3 + I * 6;
           const nearX = perspectiveOffset + cursorOffset;
-          nearDepthEl.style.transform = `translate3d(${nearX.toFixed(1)}px, ${nearY.toFixed(1)}px, 0) scale(${(scaleX * 1.018).toFixed(4)}, ${(scaleY * 1.008).toFixed(4)})`;
-          nearDepthEl.style.opacity = (I * 0.82).toFixed(3);
-          nearDepthEl.style.filter = `blur(${(3.0 + I * 5.0).toFixed(1)}px)`;
+          nearDepthEl.style.transform = `translate3d(${nearX.toFixed(1)}px, ${nearY.toFixed(1)}px, 0) scale(${(scaleX * 1.015).toFixed(4)}, ${(scaleY * 1.008).toFixed(4)})`;
+          nearDepthEl.style.opacity = (I * 0.78).toFixed(3);
+          nearDepthEl.style.filter = `blur(${(2.5 + I * 4.5).toFixed(1)}px)`;
           nearDepthEl.style.fontWeight = `${currentWeight}`;
           nearDepthEl.style.fontVariationSettings = `'wght' ${currentWeight}`;
-          nearDepthEl.style.webkitTextStroke = I > 0.02 ? `${(I * 1.6).toFixed(1)}px rgba(6, 10, 20, 0.96)` : "0px";
+          nearDepthEl.style.webkitTextStroke = "0px";
         }
 
-        // 6. LAYER 1: MAIN LETTER FACE (Sharp, bright, thick, strictly anchored baseline & center)
+        // 5. LAYER 1: MAIN LETTER FACE (Sharp, bright, crisp, strictly anchored baseline & center)
         const mainEl = mainRefs.current[i];
         if (mainEl) {
           mainEl.style.transform = `scale(${scaleX.toFixed(4)}, ${scaleY.toFixed(4)})`;
           mainEl.style.fontWeight = `${currentWeight}`;
           mainEl.style.fontVariationSettings = `'wght' ${currentWeight}`;
-          mainEl.style.webkitTextStroke = I > 0.02 ? `${strokeWidth}px rgba(245, 248, 255, 0.98)` : "0px";
+          mainEl.style.webkitTextStroke = "0px";
           mainEl.style.opacity = (0.80 + I * 0.20).toFixed(3);
 
-          const brightness = 1 + I * 0.24;
+          const brightness = 1 + I * 0.22;
           mainEl.style.filter = I > 0.02
-            ? `brightness(${brightness.toFixed(2)}) drop-shadow(0 0 ${(6 + I * 10).toFixed(1)}px rgba(215, 235, 255, ${(I * 0.22).toFixed(2)}))`
+            ? `brightness(${brightness.toFixed(2)}) drop-shadow(0 0 ${(6 + I * 8).toFixed(1)}px rgba(220, 240, 255, ${(I * 0.18).toFixed(2)}))`
             : "none";
         }
 
